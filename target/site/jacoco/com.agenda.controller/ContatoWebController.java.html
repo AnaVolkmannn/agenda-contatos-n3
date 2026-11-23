@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>ContatoWebController.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">agenda-contatos</a> &gt; <a href="index.source.html" class="el_package">com.agenda.controller</a> &gt; <span class="el_source">ContatoWebController.java</span></div><h1>ContatoWebController.java</h1><pre class="source lang-java linenums">package com.agenda.controller;
+
+import com.agenda.model.Contato;
+import com.agenda.service.ContatoService;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+import java.util.Optional;
+
+@Controller
+@RequestMapping(&quot;/contatos&quot;)
+public class ContatoWebController {
+
+    private final ContatoService contatoService;
+
+<span class="fc" id="L21">    public ContatoWebController(ContatoService contatoService) {</span>
+<span class="fc" id="L22">        this.contatoService = contatoService;</span>
+<span class="fc" id="L23">    }</span>
+
+    // Tela 1: Listagem de contatos
+    @GetMapping
+    public String listarContatos(Model model) {
+<span class="fc" id="L28">        model.addAttribute(&quot;contatos&quot;, contatoService.listarTodos());</span>
+<span class="fc" id="L29">        return &quot;contatos/lista&quot;;</span>
+    }
+
+    // Tela 2: Formulário de novo contato
+    @GetMapping(&quot;/novo&quot;)
+    public String formularioNovo(Model model) {
+<span class="fc" id="L35">        model.addAttribute(&quot;contato&quot;, new Contato());</span>
+<span class="fc" id="L36">        model.addAttribute(&quot;modo&quot;, &quot;cadastrar&quot;);</span>
+<span class="fc" id="L37">        return &quot;contatos/formulario&quot;;</span>
+    }
+
+    // Ação: Salvar novo contato
+    @PostMapping(&quot;/salvar&quot;)
+    public String salvar(@ModelAttribute Contato contato, Model model) {
+        try {
+<span class="fc" id="L44">            contatoService.salvarContato(contato);</span>
+<span class="fc" id="L45">            return &quot;redirect:/contatos&quot;;</span>
+<span class="fc" id="L46">        } catch (IllegalArgumentException ex) {</span>
+<span class="fc" id="L47">            return formularioComErro(model, contato, ex, &quot;cadastrar&quot;);</span>
+        }
+    }
+
+    // Tela 3: Formulário de edição
+    @GetMapping(&quot;/editar/{id}&quot;)
+    public String formularioEditar(@PathVariable Long id, Model model) {
+<span class="fc" id="L54">        Optional&lt;Contato&gt; opt = contatoService.buscarPorId(id);</span>
+<span class="fc bfc" id="L55" title="All 2 branches covered.">        if (opt.isEmpty()) {</span>
+<span class="fc" id="L56">            return &quot;redirect:/contatos&quot;;</span>
+        }
+<span class="fc" id="L58">        model.addAttribute(&quot;contato&quot;, opt.get());</span>
+<span class="fc" id="L59">        model.addAttribute(&quot;modo&quot;, &quot;editar&quot;);</span>
+<span class="fc" id="L60">        return &quot;contatos/formulario&quot;;</span>
+    }
+
+    // Ação: Atualizar contato
+    @PostMapping(&quot;/atualizar/{id}&quot;)
+    public String atualizar(@PathVariable Long id, @ModelAttribute Contato contato, Model model) {
+        try {
+<span class="fc" id="L67">            contatoService.atualizarContato(id, contato);</span>
+<span class="fc" id="L68">            return &quot;redirect:/contatos&quot;;</span>
+<span class="fc" id="L69">        } catch (IllegalArgumentException ex) {</span>
+<span class="fc" id="L70">            contato.setId(id);</span>
+<span class="fc" id="L71">            return formularioComErro(model, contato, ex, &quot;editar&quot;);</span>
+        }
+    }
+
+    // Ação: Excluir contato
+    @GetMapping(&quot;/excluir/{id}&quot;)
+    public String excluir(@PathVariable Long id) {
+<span class="fc" id="L78">        contatoService.deletarContato(id);</span>
+<span class="fc" id="L79">        return &quot;redirect:/contatos&quot;;</span>
+    }
+
+    private String formularioComErro(final Model model, final Contato contato,
+                                     final IllegalArgumentException ex, final String modo) {
+<span class="fc" id="L84">        model.addAttribute(&quot;erro&quot;, ex.getMessage());</span>
+<span class="fc" id="L85">        model.addAttribute(&quot;contato&quot;, contato);</span>
+<span class="fc" id="L86">        model.addAttribute(&quot;modo&quot;, modo);</span>
+<span class="fc" id="L87">        return &quot;contatos/formulario&quot;;</span>
+    }
+
+    // Redirecionamento da raiz
+    @GetMapping(&quot;/&quot;)
+    public String index() {
+<span class="fc" id="L93">        return &quot;redirect:/contatos&quot;;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

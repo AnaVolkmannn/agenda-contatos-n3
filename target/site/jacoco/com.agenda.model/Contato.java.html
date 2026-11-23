@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="pt"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Contato.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">agenda-contatos</a> &gt; <a href="index.source.html" class="el_package">com.agenda.model</a> &gt; <span class="el_source">Contato.java</span></div><h1>Contato.java</h1><pre class="source lang-java linenums">package com.agenda.model;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = &quot;contatos&quot;)
+public class Contato {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private String nome;
+    private String telefone;
+    private String email;
+    private String departamento;
+    private String observacoes;
+
+<span class="fc" id="L23">    public Contato() {</span>
+<span class="fc" id="L24">    }</span>
+
+<span class="fc" id="L26">    public Contato(String nome, String telefone, String email, String departamento) {</span>
+<span class="fc" id="L27">        this.nome = nome;</span>
+<span class="fc" id="L28">        this.telefone = telefone;</span>
+<span class="fc" id="L29">        this.email = email;</span>
+<span class="fc" id="L30">        this.departamento = departamento;</span>
+<span class="fc" id="L31">    }</span>
+
+    // CPD-OFF: getters/setters de entidade JPA são estruturalmente idênticos por natureza
+    public Long getId() {
+<span class="fc" id="L35">        return id;</span>
+    }
+
+    public void setId(Long id) {
+<span class="fc" id="L39">        this.id = id;</span>
+<span class="fc" id="L40">    }</span>
+
+    public String getNome() {
+<span class="fc" id="L43">        return nome;</span>
+    }
+
+    public void setNome(String nome) {
+<span class="fc" id="L47">        this.nome = nome;</span>
+<span class="fc" id="L48">    }</span>
+
+    public String getTelefone() {
+<span class="fc" id="L51">        return telefone;</span>
+    }
+
+    public void setTelefone(String telefone) {
+<span class="fc" id="L55">        this.telefone = telefone;</span>
+<span class="fc" id="L56">    }</span>
+
+    public String getEmail() {
+<span class="fc" id="L59">        return email;</span>
+    }
+
+    public void setEmail(String email) {
+<span class="fc" id="L63">        this.email = email;</span>
+<span class="fc" id="L64">    }</span>
+
+    public String getDepartamento() {
+<span class="fc" id="L67">        return departamento;</span>
+    }
+
+    public void setDepartamento(String departamento) {
+<span class="fc" id="L71">        this.departamento = departamento;</span>
+<span class="fc" id="L72">    }</span>
+
+    public String getObservacoes() {
+<span class="fc" id="L75">        return observacoes;</span>
+    }
+
+    public void setObservacoes(String observacoes) {
+<span class="fc" id="L79">        this.observacoes = observacoes;</span>
+<span class="fc" id="L80">    }</span>
+    // CPD-ON
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

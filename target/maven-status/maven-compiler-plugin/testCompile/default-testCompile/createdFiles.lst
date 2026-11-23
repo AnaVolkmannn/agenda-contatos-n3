@@ -1,0 +1,4 @@
+com\agenda\controller\ContatoRestControllerTest.class
+com\agenda\controller\ContatoWebControllerTest.class
+com\agenda\service\ContatoServiceTest.class
+com\agenda\ContatoBaselineTest.class
